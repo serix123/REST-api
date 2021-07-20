@@ -4,8 +4,15 @@ const Employees = require('../models/employees.model')
 
 
 // Routes
-router.get('/', (req, res) => {
-  res.send('GET request posts')
+router.get('/', async (req, res) => {
+  
+  try {
+    const employees = await Employees.find();
+    res.json(employees);
+  } catch (error) {
+    res.json({ message: error });
+  }
+
 });
 
 router.post('/add', async (req, res) => {
