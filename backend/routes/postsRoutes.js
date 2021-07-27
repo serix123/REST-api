@@ -4,6 +4,8 @@ const Employees = require('../models/employees.model')
 
 
 // Routes
+
+// get all data from db
 router.get('/', async (req, res) => {
   
   try {
@@ -15,6 +17,20 @@ router.get('/', async (req, res) => {
 
 });
 
+// retrieve specific data
+router.get('/:employeeId', async (req, res) => {
+  // console.log(req.params.employeeId)
+
+  try {
+    const employee = await Employees.find({_id:req.params.employeeId});
+    res.json(employee);
+  } catch (error) {
+    res.json({ message: error });
+  }
+});
+
+
+// send data to db
 router.post('/add', async (req, res) => {
   // console.log(req.body);
 
@@ -31,10 +47,21 @@ router.post('/add', async (req, res) => {
   } catch (error) {
     res.json({message: error})
   }
-  
 
 });
 
+// remove data from db
+router.delete('/remove/:employeeId', async (req, res) => {
+  // console.log(req.body);
+
+  try {
+    const removedEmployee = await Employees.remove({_id:req.params.employeeId})
+    res.json(removedEmployee);
+  } catch (error) {
+    res.json({message: error})
+  }
+
+});
 
 
 
