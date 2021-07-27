@@ -63,6 +63,20 @@ router.delete('/remove/:employeeId', async (req, res) => {
 
 });
 
+router.patch('/update/:employeeId', async(req, res) => {
 
+  try {
+    const updatedEmployee = await Employees.updateOne(
+      { _id: req.params.employeeId },
+      {
+        $set: {
+          first_name: req.body.first_name,
+        }
+      })
+    res.json(updatedEmployee);
+  } catch (error) {
+    res.json({message: error})
+  }
+})
 
 module.exports = router
